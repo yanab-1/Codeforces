@@ -39,7 +39,7 @@ public class B_2090 {
                 }
             }
             if(flag){
-                System.out.println("yes");;
+                System.out.println("yes");
             }   
             else{
                 System.out.println("no");
