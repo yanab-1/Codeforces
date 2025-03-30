@@ -49,7 +49,5 @@ public class D_2065 {
             
             System.out.println(score);
         }
-        
-        sc.close();
     }
 }
