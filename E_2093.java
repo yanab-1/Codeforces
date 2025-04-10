@@ -1,4 +1,5 @@
-import java.util.HashMap;
+
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class E_2093 {
@@ -31,20 +32,24 @@ public class E_2093 {
     }
     public static boolean canSplit(int[] a,int k,int mex){
         int seg=0;
-        HashMap<Integer,Integer> map=new HashMap<>();
-        int f=0;
+        boolean[] used=new boolean[mex];
+        int curMex=0;
         for(int i=0;i<a.length;i++){
-            int val=a[i];
-            map.put(val,map.getOrDefault(val,0)+1);
-            if(val<mex && map.get(val)==1){
-                f++;
+            if(a[i]<mex){
+                if( !used[a[i]]){
+                    used[a[i]]=true;
+                    curMex++;
+                }
             }
-            if(f==mex){
+            if(curMex==mex){
                 seg++;
-                map.clear();
-                f = 0;
+                if(seg==k){
+                    return true;
+                }
+                Arrays.fill(used,false);
+                curMex=0;
             }
         }
-        return seg>=k;
+        return false;
     }
 }
