@@ -10,3 +10,4 @@ public class A_1 {
         System.out.println((long)(Math.ceil((double)n/a)*Math.ceil((double)m/a)));
     }
 }
+
