@@ -7,21 +7,23 @@ public class A_2096 {
         while(t-->0) {
             int n=sc.nextInt();
             String s=sc.next();
-            int r=n;
-            int l=1;
-            int[] ans=new int[n];
-            for(int i=n-1;i>0;i--){
-                if(s.charAt(i-1)=='<'){
-                    ans[i]=l++;
+            int [] arr = new int[n];
+
+            int presmall =1;
+            int pregre=n;
+            for(int i=s.length()-1;i>=0;i--) {
+                if(s.charAt(i)=='<'){
+                    arr[i+1]=presmall++;
                 }
                 else{
-                    ans[i]=r--;
+                    arr[i+1]=pregre--;
                 }
             }
-            ans[0]=l;
-            for(int i:ans){
+            arr[0]=pregre;
+            for(int i:arr){
                 System.out.print(i+" ");
-            }
+            }            
+             System.out.println();  
         }
     }
 }
