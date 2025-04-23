@@ -23,7 +23,7 @@ public class A_2096 {
             for(int i:arr){
                 System.out.print(i+" ");
             }            
-             System.out.println();  
+            System.out.println();  
         }
     }
 }
