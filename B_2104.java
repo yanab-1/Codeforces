@@ -1,6 +1,5 @@
 
 import java.util.Scanner;
-import javax.swing.text.DefaultStyledDocument;
 
 public class B_2104 {
     public static void main(String[] args) {
