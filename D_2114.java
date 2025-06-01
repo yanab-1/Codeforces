@@ -1,67 +1,49 @@
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class D_2114 {
- public static void main(String[] args) {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int t = sc.nextInt();
         while (t-- > 0) {
             int n = sc.nextInt();
-            int[][] a = new int[n][2];
-            Map<Integer, Integer> xCount = new HashMap<>();
-            Map<Integer, Integer> yCount = new HashMap<>();
-            List<Integer> xVals = new ArrayList<>();
-            List<Integer> yVals = new ArrayList<>();
-            for (int i = 0; i < n; i++) {
-                int x = sc.nextInt();
-                int y = sc.nextInt();
-                a[i][0] = x;
-                a[i][1] = y;
-                xVals.add(x);
-                yVals.add(y);
-                xCount.put(x, xCount.getOrDefault(x, 0) + 1);
-                yCount.put(y, yCount.getOrDefault(y, 0) + 1);
+            int[][] x=new int[n][2];
+            int[][] y=new int[n][2];
+            for(int i=0;i<n;i++){
+                x[i][0]=sc.nextInt();
+                y[i][0]=sc.nextInt();
+                x[i][1]=y[i][1]=i;
             }
-            if (n == 1) {
-                System.out.println(1);
+            Arrays.sort(x,(a,b)->Integer.compare(a[0],b[0]));
+            Arrays.sort(y,(a,b)->Integer.compare(a[0],b[0]));
+            long ans=rec_area(x[0][0], x[n-1][0], y[0][0], y[n-1][0], n);
+            if(n==1){
+                System.out.println(ans);
                 continue;
             }
-            Collections.sort(xVals);
-            Collections.sort(yVals);
-            long minX = xVals.get(0);
-            long maxX = xVals.get(n - 1);
-            long min2X = xVals.get(1);
-            long max2X = xVals.get(n - 2);
-            long minY = yVals.get(0);
-            long maxY = yVals.get(n - 1);
-            long min2Y = yVals.get(1);
-            long max2Y = yVals.get(n - 2);
-            long baseWidth = maxX - minX + 1;
-            long baseHeight = maxY - minY + 1;
-            long baseArea = baseWidth * baseHeight;
-            long ans = baseArea;
-            for (int[] coords : a) {
-                long xi = coords[0];
-                long yi = coords[1];
-                long newMinX = (xi == minX && xCount.get((int) minX) == 1) ? min2X : minX;
-                long newMaxX = (xi == maxX && xCount.get((int) maxX) == 1) ? max2X : maxX;
-                long newMinY = (yi == minY && yCount.get((int) minY) == 1) ? min2Y : minY;
-                long newMaxY = (yi == maxY && yCount.get((int) maxY) == 1) ? max2Y : maxY;
-                long width = newMaxX - newMinX + 1;
-                long height = newMaxY - newMinY + 1;
-                long area = width * height;
-                if (area == n - 1) {
-                    area += Math.min(width, height);
-                }
-                ans = Math.min(ans, area);
+            HashSet<Integer> extreme=new HashSet<>();
+            extreme.add(x[0][1]);
+            extreme.add(x[n-1][1]);
+            extreme.add(y[0][1]);
+            extreme.add(y[n-1][1]);
+            for(int i:extreme){
+                int minx=x[0][1]==i?x[1][0]:x[0][0];
+                int maxx=x[n-1][1]==i?x[n-2][0]:x[n-1][0];
+                int miny=y[0][1]==i?y[1][0]:y[0][0];
+                int maxy=y[n-1][1]==i?y[n-2][0]:y[n-1][0];
+                ans=Math.min(ans,rec_area(minx,maxx,miny,maxy,n));
             }
-
             System.out.println(ans);
         }
+    }
+    public static long rec_area(int minx,int maxx,int miny,int maxy,int n){
+        long l=maxx-minx+1;
+        long h=maxy-miny+1;
+        if(n>l*h){
+            return Math.min(h*(l+1),l*(h+1));
+        }
+        return l*h;
     }
 }
