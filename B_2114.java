@@ -17,22 +17,12 @@ public class B_2114 {
                     zero++;
                 }
             }
-            int mis=n/2-k;
-            boolean flag=true;
-            if(mis<0 || mis>Math.min(one, zero)) {
-                flag=false;
-            }
-            else{
-                int r=zero-mis;
-                if(r%2!=0 || r<0){
-                    flag=false;
-                }
-            }
-            if(flag){
-                System.out.println("YES");
-            }
-            else{
-                System.out.println("NO");
+            int minpair=Math.max(one,zero)-n/2;
+            int maxpair=one/2+zero/2;
+            if(k>=minpair && k<=maxpair && (minpair-k)%2==0) {
+                System.out.println("Yes");
+            } else {
+                System.out.println("No");
             }
         }  
     }
