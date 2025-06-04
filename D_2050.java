@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class D_2050 {
     public static void main(String[] args) {
+        @SuppressWarnings("resource")
         Scanner sc = new Scanner(System.in);
         int t = sc.nextInt();
         sc.nextLine();
@@ -9,7 +10,6 @@ public class D_2050 {
             String s = sc.nextLine();
             char[] arr = s.toCharArray();
             int swapcount = 1;
-            int ans = 0;
             while (swapcount != 0) {
                 int sw = 0;
                 for (int i = 1; i < arr.length; i++) {
