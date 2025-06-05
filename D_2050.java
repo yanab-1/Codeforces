@@ -2,7 +2,6 @@ import java.util.Scanner;
 
 public class D_2050 {
     public static void main(String[] args) {
-        @SuppressWarnings("resource")
         Scanner sc = new Scanner(System.in);
         int t = sc.nextInt();
         sc.nextLine();
