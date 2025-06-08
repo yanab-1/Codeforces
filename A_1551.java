@@ -8,14 +8,10 @@ public class A_1551{
         while(t-->0){
             int n=sc.nextInt();
             int ans=n%3;
-            if(ans==0){
-                System.out.println(n/3+" "+n/3);
-            }
-            else if(ans==1){
-                System.out.println((n/3+1)+" "+n/3);
-            }
-            else{
-                System.out.println(n/3+" "+(n/3+1));
+            switch (ans) {
+                case 0 -> System.out.println(n/3+" "+n/3);
+                case 1 -> System.out.println((n/3+1)+" "+n/3);
+                default -> System.out.println(n/3+" "+(n/3+1));
             }
         }
     }
