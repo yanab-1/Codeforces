@@ -20,7 +20,7 @@ public class B_1447 {
                     }
                     sum+=Math.abs(arr[i][j]);
                     if(arr[i][j]<0){
-                        neg++;
+                        neg++;                       
                     }
                     small=Math.min(small,Math.abs(arr[i][j]));
                 }
