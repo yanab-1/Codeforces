@@ -13,8 +13,8 @@ public class B_2113 {
             int y1=sc.nextInt();
             int x2=sc.nextInt();
             int y2=sc.nextInt();
-            boolean dx=((x1-x2)%a+a)%a==0;
-            boolean dy=((y1-y2)%b+b)%b==0;
+            boolean dx=Math.abs(x1-x2)%a==0;
+            boolean dy=Math.abs(y1-y2)%b==0;
             boolean vertical=dx && (x1!=x2 || dy);
             boolean horizontal=dy && (y1!=y2 || dx);
             System.out.println(vertical || horizontal?"YES":"NO");
