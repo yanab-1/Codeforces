@@ -9,28 +9,29 @@ public class D_2117 {
             int n=sc.nextInt();
             long[] a=new long[n];
             for(int i=0;i<n;i++){
-                a[i]=sc.nextInt();
+                a[i]=sc.nextLong();
             }
-            int c=0;
-            long diff=a[1]-a[0];
-            for(int i=1;i<n;i++){
-                if(a[i]-a[i-1]!=diff){
-                    System.out.println("no");   
-                    c=1;
-                    break;
-                }
-            }
-            if(c==1){
-                continue;
-            }
-            long y=a[0]-diff;
-            long x=a[0]+diff*n;
-            if(y>=0 && x>=0 && y%(n+1)==0){
-                System.out.println("yes");
-            }
-            else{
+            print(a,n);
+        }
+    }
+
+    private static void print(long[] a,int n) {
+        if((2*a[0]-a[1])<0 || (2*a[0]-a[1])%(n+1)!=0){
+            System.out.println("no");
+            return;
+        }
+        long x2=(2*a[0]-a[1])/(n+1);
+        long x1=a[0]-n*x2;
+        if(x1<0){
+            System.out.println("no");
+            return;
+        }
+        for(int i=1;i<=n;i++){
+            if(a[i-1]-i*x1-(n-i+1)*x2!=0){
                 System.out.println("no");
+                return;
             }
         }
+        System.out.println("yes");
     }
 }

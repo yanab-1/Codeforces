@@ -1,5 +1,7 @@
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class F_2121 {
@@ -15,42 +17,37 @@ public class F_2121 {
                 a[i]=sc.nextLong();
             }
             long ans=0;
-            int i=0;
-            while(i<n){
+            List<Long> seg = new ArrayList<>();
+            for(int i=0;i<n;i++){
                 if(a[i]>x){
-                    i++;
-                    continue;
-                }
-                int st=i;
-                while(i<n && a[i]<=x){
-                    i++;
-                }
-                int end=i-1;
-                ans+=count(a,st,end,s);
-                int j=st;
-                while(j<=end){
-                    if(a[j]==x){
-                        j++;
-                        continue;
-                    }
-                    int bst=j;
-                    while(j<=end && a[j]<x){
-                        j++;
-                    }
-                    int bnd=j-1;
-                    ans-=count(a,bst,bnd,s);
+                    ans+= count(seg, s);
+                    seg.clear();
+                }else{
+                    seg.add(a[i]);
                 }
             }
+            ans+= count(seg, s);
+            seg.clear();
+            for(int i=0;i<n;i++){
+                if(a[i]>=x){
+                    ans-= count(seg, s);
+                    seg.clear();
+                }else{
+                    seg.add(a[i]);
+                }
+            }
+            ans-= count(seg, s);
+            seg.clear();
             System.out.println(ans);
         }
     }
-    public static long count(long[] a,int l,int r,long tar){
+    public static long count(List<Long> arr,long tar){
         long res=0;
         long pre=0;
         HashMap<Long,Integer> map=new HashMap<>();
         map.put(0L,1);
-        for(int k=l;k<=r;k++){
-            pre+=a[k];
+        for(int k=0;k<arr.size();k++){
+            pre+=arr.get(k);
             long w=pre-tar;
             res+=map.getOrDefault(w, 0);
             map.put(pre, map.getOrDefault(pre, 0)+1);

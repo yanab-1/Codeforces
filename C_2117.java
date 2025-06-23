@@ -1,5 +1,5 @@
 
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class C_2117 {
@@ -8,36 +8,26 @@ public class C_2117 {
         int t=sc.nextInt();
         while(t-->0){
             int n=sc.nextInt();
-            int[] a=new int[n+2];
-            int[] f=new int[n+2];
-            int[] ne=new int[n+2];
-            for(int i=1;i<=n;i++){
+            int[] a=new int[n];
+            for(int i=0;i<n;i++){
                 a[i]=sc.nextInt();
             }
-            Arrays.fill(f,1,n+1,n+1);
-            for(int i=n;i>=1;i--){
-                ne[i]=f[a[i]];
-                f[a[i]]=i;
-            }
-            int p=1;
-            int c=0;
-            while(p<=n){
-                int e=p;
-                while(true){
-                    int nn=0;
-                    for(int i=p;i<=e;i++){
-                        nn=Math.max(nn,ne[i]);
-                    }
-                    c++;
-                    if(nn>n){
-                        break;
-                    }
-                    p=e+1;
-                    e=nn;
-                }
-                break;
-            }
-            System.out.println(c);
+            print(a);
         }
+    }
+
+    private static void print(int[] a) {
+        HashSet<Integer> set1 = new HashSet<>();
+        HashSet<Integer> set2 = new HashSet<>();
+        int ans=0;
+        for(int i=0;i<a.length;i++){
+            set1.add(a[i]);
+            set2.add(a[i]);
+            if(set1.size() == set2.size()){
+                ans++;
+                set2.clear();
+            }
+        }
+        System.out.println(ans);
     }
 }
