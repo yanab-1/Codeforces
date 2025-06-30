@@ -15,22 +15,28 @@ public class C_2112 {
     }
 
     private static void print(int[] a,int n) {
-        long w = 0;
-        int max=a[n-1];
-        for (int k=2;k<n;k++) {
-            int M=(k<n-1?max:a[n-2]);
-            int T=Math.max(M,2*a[k]);
-            int X=T-a[k];
-            int l=0,r=k-1;
-            while (l<r) {
-                if (a[l]+a[r]>X) {
-                    w+=(r-l);
-                    r--;
-                } else {
-                    l++;
-                }
+        long ans=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<i;j++){
+                int x=Math.max(a[n-1],2*a[i])-a[i]-a[j];
+                int k=search(a,0,j,x);
+                ans+=j-k;
             }
         }
-        System.out.println(w);
+        System.out.println(ans);
+    }
+
+    private static int search(int[] a, int i, int j, int x) {
+        int l=i;
+        int r=j-1;
+        while(l<=r){
+            int m=l+(r-l)/2;
+            if(a[m]<=x){
+                l=m+1;
+            } else {
+                r=m-1;
+            }
+        }
+        return l;
     }
 }
