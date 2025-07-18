@@ -15,6 +15,7 @@ public class B_2119 {
         long qx=sc.nextLong();
         long qy=sc.nextLong();
         long[] x = new long[(int)n];
+        long dist=(px-qx)*(px-qx)+(py-qy)*(py-qy);
         long sum=0;
         long max=0;
         for(int i=0; i<n; i++){
@@ -24,16 +25,15 @@ public class B_2119 {
                 max = x[i];
             }
         }
-        double EPS = 1e-9;
-        double dx=qx-px;
-        double dy=qy-py;
-        double d=Math.hypot(dx, dy);
-        long res=sum-max;
-        double l=(max>res) ? (max-res) : 0.0;
-        if(d+EPS>=l && d<=sum+EPS){
-            System.out.println("YES");
-        } else {
-            System.out.println("NO");
+        if(sum*sum<dist){
+            System.out.println("no");
+            return;
         }
+        long min=Math.max(0,2*max-sum);
+        if(min*min>dist){
+            System.out.println("no");
+            return;
+        }
+        System.out.println("yes");
     }
 }

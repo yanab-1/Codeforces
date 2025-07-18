@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class C_2124 {
-        public static void main(String[] args) {
+    public static void main(String[] args) {
         Scanner sc=new Scanner(System.in);
         int t=sc.nextInt();
         while(t-->0){
@@ -19,20 +19,21 @@ public class C_2124 {
         for (int i=0;i+1<n;i++) {
             if(b[i+1]%b[i]!=0) {
                 long g=gcd(b[i],b[i+1]);
-                long lcm=b[i]/g;
-                long d=gcd(ans,lcm);
-                ans=(ans/d)*lcm;
+                ans=lcm(ans,b[i]/g);
             }
         }
         System.out.println(ans);
+    }
+    private static long gcd(long a, long b) {
+        while (b != 0) {
+            long t = b;
+            b = a % b;
+            a = t;
         }
-        private static long gcd(long a, long b) {
-            while (b != 0) {
-                long t = b;
-                b = a % b;
-                a = t;
-            }
-            return a;
-        }
-        
+        return a;
+    }
+
+    private static long lcm(long a, long b) {
+        return a * b / gcd(a, b);
+    }
 }
