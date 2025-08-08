@@ -15,12 +15,12 @@ public class C_2128 {
         }
         int min=arr[0];
         for(int i=1;i<n;i++){
-            if(arr[i]>2*min){
-                System.out.println("YES");
+            if(arr[i]>=2*min){
+                System.out.println("NO");
                 return;
             }
             min=Math.min(min, arr[i]);
         }
-        System.out.println("NO");
+        System.out.println("YES");
     }
 }
