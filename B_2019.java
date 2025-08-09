@@ -8,7 +8,6 @@ public class B_2019{
         int t = sc.nextInt(); 
         while (t-- > 0) solve(sc);
     }
-
     private static void solve(Scanner sc) {
         int n = sc.nextInt();
         int q = sc.nextInt();
