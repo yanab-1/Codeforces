@@ -11,7 +11,7 @@ public class E_2137 {
 
     private static void solve(Scanner sc) {
         int n = sc.nextInt();
-        int k = sc.nextInt();
+        long k = sc.nextLong();
         int[] a = new int[n];
         for(int i = 0; i < n; i++){
             a[i] = sc.nextInt();
@@ -52,19 +52,19 @@ public class E_2137 {
         if(freq[ind] == 0){
             ind++;
             if(k % 2 == 0){
-            sum += freq[ind] * ind;
+                sum += (long) freq[ind] * ind;
             }
             else{
-                sum += freq[ind] * (ind - 1);
+                sum += (long) freq[ind] * (ind - 1);
             }
             System.out.println(sum);
             return;
         }
-        if(k % 2 == 0){
-            sum += freq[ind] * ind;
+        if(k % 2 == 0){ 
+            sum += (long) freq[ind] * ind;
         }
         else{
-            sum += freq[ind] * (ind + 1);
+            sum += (long) freq[ind] * (ind + 1);
         }
         System.out.println(sum);
     }
