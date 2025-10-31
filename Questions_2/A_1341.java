@@ -13,6 +13,13 @@ public class A_1341 {
         int b = sc.nextInt();
         int c = sc.nextInt();
         int d = sc.nextInt();
-        
+
+        int L = n * (a - b);
+        int R = n * (a + b);
+
+        if (R < c - d || c + d < L)
+            System.out.println("No");
+        else
+            System.out.println("Yes");
     }
 }
