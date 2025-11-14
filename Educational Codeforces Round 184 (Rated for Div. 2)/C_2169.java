@@ -11,21 +11,19 @@ public class C_2169 {
 
     private static void solve(Scanner sc) {
         int n = sc.nextInt();
-        long[] a = new long[n + 1];
-        long[] pref = new long[n + 1];
-        for(int i = 1; i <= n; i++) a[i] = sc.nextLong();
-        for(int i = 1; i <= n; i++) pref[i] = pref[i - 1] + a[i];
-        long bestG = 0;
-        long bestGain = Long.MIN_VALUE;
-        for(int i = 1; i <= n; i++){
-            long Fr = 1L * i * i + i - pref[i];
-            long gain = Fr + bestG;
-            if(gain > bestGain) bestGain = gain;
-            long Gj = pref[i] - 1L * i * i - i;
-            if(Gj > bestG) bestG = Gj;
+        long[] a = new long[n];
+        long[] pref = new long[n];
+        for(int i = 0; i < n; i++) a[i] = sc.nextLong();
+        pref[0] = a[0];
+        for(int i = 1; i < n; i++) pref[i] = pref[i - 1] + a[i];
+        long maxGain = 0;
+        long maxL = 0;
+        for(int i = 0; i < n; i++){
+            long prefBefore = (i == 0 ? 0 : pref[i - 1]);
+            maxL = Math.max(maxL, -(long)(i + 1) * (i + 1) + (i + 1) + prefBefore);
+            maxGain = Math.max(maxGain, (long) (i + 1) * (i + 1) + (i + 1) - pref[i] + maxL);
         }
-        long ans = pref[n] + (bestGain > 0 ? bestGain : 0);
+        long ans = pref[n - 1] + maxGain;
         System.out.println(ans);
-
     }
 }
