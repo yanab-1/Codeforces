@@ -52,6 +52,7 @@ public class B_1242 {
         }
     }
 }
+// DSU (TLE)
 // import java.util.HashMap;
 // import java.util.HashSet;
 // import java.util.Scanner;
