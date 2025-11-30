@@ -8,36 +8,39 @@ public class C_2170 {
     }
 
     private static void solve(Scanner sc) {
-        int n = sc.nextInt();
+        long n = sc.nextLong();
         long k = sc.nextLong();
+        
+        long[] q = new long[(int)n];
+        long[] r = new long[(int)n];
 
-        TreeMap<Long, Integer> freq = new TreeMap<>();
+        for (int i = 0; i < n; i++) q[i] = sc.nextLong();
+        for (int i = 0; i < n; i++) r[i] = sc.nextLong();
+
+        long[] a = new long[(int)n];
+        long[] b = new long[(int)n];
 
         for (int i = 0; i < n; i++) {
-            long q = sc.nextLong();
-            freq.put(q, freq.getOrDefault(q, 0) + 1);
+            a[i] = q[i] + 1;
+            b[i] = r[i] + 1;
         }
 
-        long[] r = new long[n];
-        for (int i = 0; i < n; i++) r[i] = sc.nextLong();
-        Arrays.sort(r);
+        Arrays.sort(a);
+        Arrays.sort(b);
 
         long ans = 0;
+        int start = 0;
+        int end = (int)n - 1;
+        long limit = k + 1;
 
-        for (int i = n - 1; i >= 0; i--) {
-            long rv = r[i];
-            long maxQ = (k - rv) / (rv + 1);
-
-            if (maxQ < 1) continue;
-
-            Long chosen = freq.floorKey(maxQ);
-            if (chosen == null) continue;
-
-            int c = freq.get(chosen);
-            if (c == 1) freq.remove(chosen);
-            else freq.put(chosen, c - 1);
-
-            ans++;
+        while (start < n && end >= 0) {
+            if (a[start] <= limit / b[end]) {
+                ans++;
+                start++;
+                end--;
+            } else {
+                end--;
+            }
         }
 
         System.out.println(ans);
