@@ -10,26 +10,21 @@ public class C_2175 {
     public static void solve(Scanner sc) {
         String s = sc.next();
         String t = sc.next();
-
         int[] fs = new int[26];
         int[] ft = new int[26];
-
         for (char c : s.toCharArray()) fs[c - 'a']++;
         for (char c : t.toCharArray()) ft[c - 'a']++;
-
         for (int i = 0; i < 26; i++) {
             if (ft[i] < fs[i]) {
                 System.out.println("Impossible");
                 return;
             }
         }
-
         StringBuilder R = new StringBuilder();
         for (int i = 0; i < 26; i++) {
             int excess = ft[i] - fs[i];
             for (int k = 0; k < excess; k++) R.append((char)('a' + i));
         }
-
         int n = s.length();
         char[] nd = new char[n];
         Arrays.fill(nd, '{');
@@ -38,10 +33,8 @@ public class C_2175 {
             if (s.charAt(i + 1) != s.charAt(i)) cur = s.charAt(i + 1);
             nd[i] = cur;
         }
-
         StringBuilder res = new StringBuilder();
         int i = 0, j = 0, m = R.length();
-
         while (i < n && j < m) {
             char a = s.charAt(i), b = R.charAt(j);
             if (a < b) {
@@ -60,10 +53,8 @@ public class C_2175 {
                 }
             }
         }
-
         while (i < n) res.append(s.charAt(i++));
         while (j < m) res.append(R.charAt(j++));
-
         System.out.println(res.toString());
     }
 }
