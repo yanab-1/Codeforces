@@ -10,29 +10,18 @@ public class B_2176 {
     private static void solve(Scanner sc) {
         int n = sc.nextInt();
         String s = sc.next();
-
-        List<Integer> ones = new ArrayList<>();
-
-        for (int i = 0; i < n; i++) {
-            if (s.charAt(i) == '1') {
-                ones.add(i);
-            }
-        }
-
-        int k = ones.size();
+        String t = s + s;
         int ans = 0;
-
-        for (int i = 0; i < k; i++) {
-            int cur = ones.get(i);
-            int next = ones.get((i + 1) % k);
-            int gap;
-            if (next > cur) {
-                gap = next - cur - 1;
-            } else {
-               gap = (n - cur - 1) + next;
+        int res = 0;
+        for(int i = 0; i < t.length(); i++){
+            if(t.charAt(i) == '0'){
+                ans++;
             }
-            ans = Math.max(ans, gap);
+            else{
+                res = Math.max(res, ans);
+                ans = 0;
+            }
         }
-        System.out.println(ans);
+        System.out.println(res);
     }
 }
