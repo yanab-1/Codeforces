@@ -9,15 +9,23 @@ public class B_2178 {
 
     private static void solve(Scanner sc) {
         String r = sc.next();
+        char[] c = r.toCharArray();
         int n = r.length();
-        int a = (r.charAt(0) == 'u') ? 1 : 0;
-        int b = a + ((r.charAt(1) == 'u') ? 1 : 0);
-
-        for (int i = 2; i < n; i++) {
-            int c = (r.charAt(i) == 'u' ? 1 : 0) + Math.min(a, b);
-            a = b;
-            b = c;
+        int ans = 0;
+        if(c[0] == 'u'){
+            ans++;
+            c[0] = 's';
         }
-        System.out.println(b);
+        if(c[n - 1] == 'u'){
+            ans++;
+            c[n - 1] = 's';
+        }
+        for(int i = 1, j = 0; i < n; i++){
+            if(c[i] == 's'){
+                ans += (i - j - 1) / 2;
+                j = i;
+            }
+        }
+        System.out.println(ans);
     }
 }

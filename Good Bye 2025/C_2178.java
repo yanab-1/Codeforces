@@ -9,28 +9,19 @@ public class C_2178 {
 
     private static void solve(Scanner sc) {
         int n = sc.nextInt();
-
         long[] a = new long[n];
+        long sum = 0;
         for (int i = 0; i < n; i++) {
             a[i] = sc.nextLong();
+            sum += a[i];
         }
-
-        long suffixSum = -a[n - 1];
-        long best = a[n - 1];
-        long answer = 0;
-
-        for (int i = n - 2; i >= 0; i--) {
-            long take = a[i] + best;
-            if (take < 0) take = 0;
-
-            long cur = suffixSum + take;
-
-            suffixSum -= a[i];
-            best = Math.max(best, cur - suffixSum);
-
-            if (i == 0) answer = cur;
+        long pref = 0;
+        long ans = Long.MIN_VALUE;
+        for(int i = 0; i < n; i++){
+            sum -= a[i];
+            ans = Math.max(ans, pref - sum);
+            pref += (i == 0 ? a[i] : Math.abs(a[i]));
         }
-
-        System.out.println(answer);
+        System.out.println(ans);
     }
 }
