@@ -12,29 +12,18 @@ public class C_2184 {
     private static void solve(Scanner sc) {
         long n = sc.nextLong();
         long k = sc.nextLong();
-        if (k > n) {
-            System.out.println(-1);
-            return;
+
+        long lo = n, hi = n;
+        long ans = 0;
+
+        while (!(lo <= k && k <= hi)) {
+            if (k > hi) break;
+            hi = (hi + 1) / 2;
+            lo = lo / 2;
+            ans++;
         }
-        long x = n;
-        int steps = 0;
-        boolean possible = false;
-        while (true) {
-            if (k == x) { possible = true; break; }
-            if (x == 1) { possible = false; break; }
-            long left = x / 2;
-            long right = x - left;
-            if (k <= left) {
-                x = left;
-                steps++;
-            } else if (k <= right) {
-                x = right;
-                steps++;
-            } else {
-                possible = false;
-                break;
-            }
-        }
-        System.out.println(possible ? steps : -1);
+
+        if (lo <= k && k <= hi) System.out.println(ans);
+        else System.out.println(-1);
     }
 }
