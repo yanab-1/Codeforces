@@ -1,0 +1,1 @@
+{"name":"Local: C_1143","url":"/Users/yashbasnal99/Desktop/Codeforces/Questions_2/C_1143.java","tests":[{"id":1773433573643,"input":"5\n3 1\n1 1\n-1 0\n2 1\n3 0\n","output":"1 2 4 \n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/yashbasnal99/Desktop/Codeforces/Questions_2/C_1143.java","group":"local","local":true}
