@@ -16,6 +16,15 @@ public class A_1893 {
         for(int i = 0; i < n; i++){
             b[i] = sc.nextInt();
         }
-        
+        int cur = n - 1;
+        for(int i = 0; i < Math.min(n, k); i++){
+            if(b[cur] > n){
+                System.out.println("No");
+                return;
+            }
+            cur += n - b[cur];
+            if(cur >= n) cur -= n;
+        }
+        System.out.println("Yes");
     }
 }
