@@ -1,32 +1,15 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
-public class E_61 {
+public class D_459 {
 
     static class Segment {
         long[] tree;
         int n;
-        int[] arr;
 
-        Segment(int n, int[] arr){
+        Segment(int n){
             this.n = n;
             tree = new long[4 * n];
-            this.arr = arr;
-            build(0, 0, n - 1);
-        }
-
-        private void build(int idx, int l, int r) {
-            if(l == r){
-                tree[idx] = arr[l];
-                return;
-            }
-            int mid = (l + r) / 2;
-            build(2 * idx + 1, l, mid);
-            build(2 * idx + 2, mid + 1, r);
-            tree[idx] = tree[2 * idx + 1] + tree[2 * idx + 2]; // we change logic here for MAX, MIN, GCD
         }
 
         public long query(int l, int r){
@@ -34,21 +17,16 @@ public class E_61 {
         }
 
         private long query(int l, int r, int idx, int st, int end){
-            // no overlap
             if(r < st || l > end){
                 return 0;
             }
-
-            // complete overlap
             if(l <= st && r >= end){
                 return tree[idx];
             }
-
-            // partial overlap
             int mid = (st + end) / 2;
             long left = query(l, r, 2 * idx + 1, st, mid);
             long right = query(l, r, 2 * idx + 2, mid + 1, end);
-            return left + right; // change according to question
+            return left + right;
         }
 
         public void point_Update(int i, int val){
@@ -63,27 +41,31 @@ public class E_61 {
             int mid = (l + r) / 2;
             if(i <= mid){
                 point_Update(i, val, l, mid, 2 * idx + 1);
-            }
-            else{
+            } else {
                 point_Update(i, val, mid + 1, r, 2 * idx + 2);
             }
             tree[idx] = tree[2 * idx + 1] + tree[2 * idx +  2];
         }
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        solve(sc);
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        solve(br);
     }
-    
-    private static void solve(Scanner sc) {
-        int n = sc.nextInt();
+
+    private static void solve(BufferedReader br) throws Exception {
+        int n = Integer.parseInt(br.readLine());
+
         int[] a = new int[n];
         int[] c = new int[n];
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
         for(int i = 0; i < n; i++){
-            a[i] = sc.nextInt();
+            a[i] = Integer.parseInt(st.nextToken());
             c[i] = a[i];
         }
+
+        // Coordinate compression
         Arrays.sort(c);
         List<Integer> uniqList = new ArrayList<>();
         uniqList.add(c[0]);
@@ -92,28 +74,51 @@ public class E_61 {
                 uniqList.add(c[i]);
             }
         }
+
         for(int i = 0; i < n; i++){
             a[i] = Collections.binarySearch(uniqList, a[i]);
         }
-        int max = -1;
+
+        // ----------- Compute arr1 and arr2 using HashMap -----------
+
+        int[] arr1 = new int[n];
+        int[] arr2 = new int[n];
+
+        Map<Integer, Integer> freq = new HashMap<>();
+
+        // prefix frequency
         for(int i = 0; i < n; i++){
-            max = Math.max(max, a[i]);
+            int val = a[i];
+            freq.put(val, freq.getOrDefault(val, 0) + 1);
+            arr1[i] = freq.get(val);
         }
-        max++;
-        int[] freq = new int[max];
-        for(int i : a){
-            freq[i]++;
+
+        freq.clear();
+
+        // suffix frequency
+        for(int i = n - 1; i >= 0; i--){
+            int val = a[i];
+            freq.put(val, freq.getOrDefault(val, 0) + 1);
+            arr2[i] = freq.get(val);
         }
-        Segment sg1 = new Segment(max, freq);
-        Segment sg2 = new Segment(max, new int[max]);
-        sg1.point_Update(a[0], -1);
-        sg2.point_Update(a[0], 1);
+
+        // ----------- Segment Tree on arr2 -----------
+
+        int max = n + 2;  
+        Segment sg = new Segment(max);
+
+        for(int i : arr2){
+            sg.point_Update(i, 1);
+        }
+
         long count = 0;
-        for(int i = 1; i < n - 1; i++){
-            sg1.point_Update(a[i], -1);
-            sg2.point_Update(a[i], 1);
-            count += sg1.query(0, a[i] - 1) * sg2.query(a[i] + 1, max - 1);
+
+        for(int i = 0; i < n; i++){
+            sg.point_Update(arr2[i], -1);
+            if(i == 0) continue;
+            count += sg.query(0, arr1[i] - 1);
         }
+
         System.out.println(count);
-    }   
+    }
 }
