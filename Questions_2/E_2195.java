@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class E_2195 {
@@ -8,71 +7,46 @@ public class E_2195 {
         while(t-- >0) solve(sc);    
     }
 
-    static int n;
-    static int[] l, r, siz, pos, p;
-    static ArrayList<Integer> ord;
-    static int[][] f;
-    static long[] g;
-    static int logn;
-
-    static void dfs(int x) {
-        f[0][x] = p[x];
-        for (int j = 0; j < logn; j++) {
-            f[j + 1][x] = f[j][f[j][x]];
-        }
-
-        pos[x] = ord.size();
-        ord.add(x);
-        siz[x] = 1;
-
-        if (l[x] != -1) {
-            p[l[x]] = x;
-            p[r[x]] = x;
-
-            dfs(l[x]);
-            ord.add(x);
-            dfs(r[x]);
-            ord.add(x);
-
-            siz[x] += siz[l[x]] + siz[r[x]];
-        }
-    }
-
-    static void dfs1(int x) {
-        g[x] += 2L * siz[x] - 1;
-
-        if (l[x] != -1) {
-            g[l[x]] = g[x];
-            g[r[x]] = g[x];
-
-            dfs1(l[x]);
-            dfs1(r[x]);
-        }
-    }
+    static int[] l;
+    static int[] r;
+    static long[] dp;
+    static long MOD = 1_000_000_007;
 
     private static void solve(Scanner sc) {
-        n = sc.nextInt();
+        int n = sc.nextInt();
         l = new int[n];
         r = new int[n];
         for(int i = 0; i < n; i++){
             l[i] = sc.nextInt() - 1;
             r[i] = sc.nextInt() - 1;
         }
-        siz = new int[n];
-        pos = new int[n];
-        p = new int[n];
-        ord = new ArrayList<>();
-        g = new long[n];
-
-        logn = 31 - Integer.numberOfLeadingZeros(n);
-        f = new int[logn + 1][n];
+        dp = new long[n];
 
         dfs(0);
         dfs1(0);
 
-        for(long i : g){
-            System.out.print(i % 1_000_000_007 + " ");
+        for(long i : dp){
+            System.out.print(i % MOD + " ");
         }
         System.out.println();
+    }
+
+    private static long dfs(int i) {
+        if(l[i] == -1){
+            return dp[i] = 1;
+        }
+        long left = dfs(l[i]) % MOD;
+        long right = dfs(r[i]) % MOD;
+        return dp[i] = (left + right + 3) % MOD;
+    }
+
+    private static void dfs1(int i) {
+        if(l[i] == -1){
+            return;
+        }
+        dp[l[i]] = (dp[l[i]] + dp[i]) % MOD;
+        dp[r[i]] = (dp[r[i]] + dp[i]) % MOD;
+        dfs1(l[i]);
+        dfs1(r[i]);
     }
 }
