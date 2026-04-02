@@ -16,10 +16,8 @@ public class C_2147 {
         for (int i = 0; i < n; i++) {
             if (s.charAt(i) == '0')
                 cnt++;
-
             if (i == 0)
                 continue;
-
             if (s.charAt(i) == s.charAt(i - 1) && s.charAt(i) == '0')
                 curr = false;
 
