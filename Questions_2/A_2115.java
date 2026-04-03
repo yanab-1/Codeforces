@@ -4,58 +4,61 @@ import java.util.Queue;
 import java.util.Scanner;
 
 public class A_2115 {
+   
+    static final int N = 5005;
+    static int[][] g = new int[N][N];
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        for (int x = 0; x < N; x++) {
+            g[x][0] = g[0][x] = g[x][x] = x;
+        }
+
+        for (int x = 1; x < N; x++) {
+            for (int y = 1; y < x; y++) {
+                g[x][y] = g[y][x] = g[y][x % y];
+            }
+        }
         int t = sc.nextInt();
         while(t-- > 0) solve(sc);
     }
 
     private static void solve(Scanner sc) {
         int n = sc.nextInt();
-        long[] v = new long[n];
+        int[] v = new int[n];
         for (int i = 0; i < n; i++) {
-            v[i] = sc.nextLong();
+            v[i] = sc.nextInt();
         }
-
         int MAX = 5001;
         int[] mi = new int[MAX];
         Arrays.fill(mi, Integer.MAX_VALUE);
-
-        Queue<Long> q = new LinkedList<>();
-
+        Queue<Integer> q = new LinkedList<>();
         for (int i = 0; i < n; i++) {
-            mi[(int)v[i]] = 0;
+            mi[v[i]] = 0;
             q.add(v[i]);
         }
-        long g = 0;
+        int G = 0;
         for (int i = 0; i < n; i++) {
-            g = gcd(g, v[i]);
+            G = g[G][v[i]];
         }
-
         int cnt = 0;
         for (int i = 0; i < n; i++) {
-            if (v[i] == g) cnt++;
+            if (v[i] == G) cnt++;
         }
-
         if (cnt > 0) {
             System.out.println(n - cnt);
             return;
         }
-
         while (!q.isEmpty()) {
-            long val = q.poll();
-
-            for (long x : v) {
-                long gc = gcd(x, val);
-
+            int val = q.poll();
+            for (int x : v) {
+                int gc = g[x][val];
                 if (mi[(int)gc] == Integer.MAX_VALUE) {
                     mi[(int)gc] = mi[(int)val] + 1;
                     q.add(gc);
                 }
             }
         }
-
-        System.out.println(n + mi[(int)g] - 1);
+        System.out.println(n + mi[G] - 1);
     }
 
     static long gcd(long a, long b) {
